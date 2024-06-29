@@ -7,29 +7,38 @@ Workspace Management: View available workspaces with details like name, descript
 Booking System: Users can book workspaces, and admins can manage these bookings.
 Payment Processing: Users can make payments and view payment history.
 Admin Dashboard: Manage users, workspaces, and bookings.
+
+
 **Technologies Used**
 Backend: Flask
 Database: MongoDB (using MongoDB Atlas)
 Frontend: HTML, CSS, Bootstrap
 Other Libraries: Flask-Session, Flask-WTF, pymongo, dnspython
+
+
 **Installation**
 
 Clone the repository:
+
 git clone https://github.com/yourusername/ShareSpace.git
 cd ShareSpace
 
 Create a virtual environment:
+
 python3 -m venv venv
 source venv/bin/activate   # On Windows, use `venv\Scripts\activate`
 
 Install dependencies:
+
 pip install -r requirements.txt
 
 Set up MongoDB:
+
 Create a MongoDB cluster on MongoDB Atlas.
 Replace the connection string in the Flask application configuration with your MongoDB Atlas connection string.
 
 Run the application:
+
 flask run
 
 **Configuration**
