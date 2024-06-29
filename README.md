@@ -18,30 +18,33 @@ Other Libraries: Flask-Session, Flask-WTF, pymongo, dnspython
 
 **Installation**
 
-Clone the repository:
+**Clone the repository:**
+
 git clone https://github.com/yourusername/ShareSpace.git
 cd ShareSpace
 
-Create a virtual environment:
+**Create a virtual environment:**
 
 python3 -m venv venv
 source venv/bin/activate   # On Windows, use `venv\Scripts\activate`
 
-Install dependencies:
+**Install dependencies:**
 
 pip install -r requirements.txt
 
-Set up MongoDB:
+**Set up MongoDB:**
 
 Create a MongoDB cluster on MongoDB Atlas.
 Replace the connection string in the Flask application configuration with your MongoDB Atlas connection string.
 
-Run the application:
+**Run the application:**
 
 flask run
 
 **Configuration**
+
 Update the MongoDB connection string in the application configuration file (config.py or similar) with your MongoDB Atlas connection string.
+
 
 **Usage**
 User:
