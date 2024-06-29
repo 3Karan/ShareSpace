@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/css/style2.css" />
+    <title>Document</title>
+    <style>
+
+      body{
+        display: flex;
+      }
+      /* Style for the form container */
+      .form-container {
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        margin: 20px;
+      }
+
+      /* General input field style */
+      .input-field {
+        width: 100%;
+        padding: 8px;
+        margin: 5px 0 15px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      /* Style for the submit button */
+      .submit-button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        float: right;
+      }
+
+      .submit-button:hover {
+        background-color: #45a049;
+      }
+
+      /* Label style */
+      label {
+        font-weight: bold;
+      }
+
+      /* Style for select boxes */
+      select.input-field {
+        width: 100%;
+        padding: 8px;
+        margin: 5px 0 15px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      /* Textarea style */
+      textarea.input-field {
+        width: 100%;
+        padding: 8px;
+        margin: 5px 0 15px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        resize: vertical; /* Allow vertical resizing */
+      }
+    </style>
+  </head>
+  <body>
+    {%include 'sidebar.html'%}
+    <div id="add-room-form">
+      <h2>Add Workspace</h2>
+      <form id="workspace-form" action="/add_workspace" method="POST">
+        <!-- <label for="workspace_id">Workspace ID:</label>
+    <input
+      type="text"
+      id="workspace_id"
+      name="workspace_id"
+      required
+    /><br /><br /> -->
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required /><br /><br />
+        <label for="description">Description:</label><br />
+        <textarea
+          id="description"
+          name="description"
+          rows="4"
+          required
+        ></textarea
+        ><br /><br />
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" required /><br /><br />
+        <label for="price_plan">Price Plan:</label>
+        <input
+          type="text"
+          id="price_plan"
+          name="price_plan"
+          required
+        /><br /><br />
+        <label for="images">Images (comma-separated URLs):</label>
+        <input type="text" id="images" name="images" required /><br /><br />
+        <label for="availability_status">Availability Status:</label>
+        <select id="availability_status" name="availability_status" required>
+          <option value="available">Available</option>
+          <option value="not_available">Not Available</option></select
+        ><br /><br />
+        <label for="maintenance_status">Maintenance Status:</label>
+        <select id="maintenance_status" name="maintenance_status" required>
+          <option value="under_maintenance">Under Maintenance</option>
+          <option value="operational">Operational</option></select
+        ><br /><br />
+        <label for="workspace_category">workspace_category</label>
+        <select id="workspace_category" name="workspace_category" required>
+          <option value="Open Workspace">Open Workspace</option>
+          <option value="Private Offices">Private Offices</option>
+          <option value="Conference Rooms">Conference Rooms</option>
+          <option value="Event Room">Event Room</option>
+          <option value="Studio Room">Studio Room</option></select
+        ><br /><br />
+        <input type="submit" value="Add Workspace" />
+      </form>
+    </div>
+  </body>
+</html>

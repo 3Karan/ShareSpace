@@ -1,0 +1,48 @@
+/* navbar.css */
+
+/* General styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    background-color: #007bff; /* Navbar background color */
+    color: #ffffff; /* Text color */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.navbar-brand h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.navbar-menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.navbar-menu li {
+    margin-right: 10px;
+}
+
+.navbar-menu li a {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.navbar-menu li a:hover {
+    background-color: #0056b3; /* Darker background color on hover */
+}
+
+.navbar-menu li a.active {
+    background-color: #0056b3; /* Active link background color */
+}

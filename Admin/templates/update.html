@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      body {
+        display: flex;
+      }
+      /* Style for workspace cards */
+      .card2 {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin: 10px;
+        padding: 10px;
+        width: 300px; /* Adjust width as needed */
+        display: inline-block;
+        vertical-align: top;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+      }
+
+      .card2 .image-container {
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        border-radius: 5px;
+      }
+
+      .card2 img {
+        width: 100%;
+        height: auto; /* Allow image to adjust based on aspect ratio */
+
+        border-radius: 5px;
+        margin-bottom: 10px;
+        object-fit: cover;
+      }
+
+      .card-body {
+        text-align: left;
+      }
+
+      .card-actions {
+        margin-top: 10px;
+      }
+
+      .btn-update,
+      .btn-delete {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        margin-right: 5px;
+        cursor: pointer;
+        border-radius: 3px;
+      }
+
+      .btn-update:hover,
+      .btn-delete:hover {
+        background-color: #0056b3;
+      }
+
+      /* Style for update modal */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 20;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow-y: auto; /* Enable vertical scrolling */
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .modal-content {
+        background-color: #fff;
+        margin: 10% auto; /* Adjusted to 10% for vertical centering */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 600px;
+        position: relative;
+        border-radius: 5px;
+      }
+      .modal-content h2 {
+        margin-top: 0;
+      }
+
+      .modal-content label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .modal-content input[type="text"],
+      .modal-content textarea,
+      .modal-content select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+      }
+
+      .modal-content input[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 3px;
+      }
+
+      .modal-content input[type="submit"]:hover {
+        background-color: #0056b3;
+      }
+
+      .modal-content .close {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 30px;
+        color: #aaa;
+        cursor: pointer;
+      }
+
+      .modal-content .close:hover,
+      .modal-content .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    {% include 'sidebar.html' %}
+    <div class="main-content">
+      <div id="workspaces">
+        <div class="workspace-cards">
+          <h2 style="margin-left: 15px">All Workspaces</h2>
+          {% for workspace in workspaces %}
+          <div class="card2">
+            <img src="{{ workspace.images[0] }}" alt="Workspace Image" />
+            <div class="card-body">
+              <h3>{{ workspace.name }}</h3>
+              <p>{{ workspace.workspace_category }}</p>
+              <p>
+                <strong>Availability:</strong> {{ workspace.availability_status
+                }}
+              </p>
+
+              <div class="card-actions">
+                <!-- Update Button (Modal) -->
+                <button
+                  class="btn-update"
+                  onclick="openUpdateModal('{{ workspace._id }}')"
+                >
+                  Update
+                </button>
+                <!-- Delete Button -->
+                <form
+                  action="/delete_workspace"
+                  method="POST"
+                  style="display: inline-block"
+                >
+                  <input
+                    type="hidden"
+                    name="workspace_id"
+                    value="{{ workspace._id }}"
+                  />
+                  <button class="btn-delete" type="submit">Delete</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Modal for Update Workspace -->
+      <div id="updateModal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeUpdateModal()">&times;</span>
+          <h2>Update Workspace</h2>
+          <form id="update-form" action="/update_workspace" method="POST">
+            <input type="hidden" id="update-id" name="workspace_id" />
+            <label for="update-name">Name:</label>
+            <input
+              type="text"
+              id="update-name"
+              name="name"
+              required
+            /><br /><br />
+            <label for="update-description">Description:</label><br />
+            <textarea
+              id="update-description"
+              name="description"
+              rows="4"
+              required
+            ></textarea
+            ><br /><br />
+            <label for="update-location">Location:</label>
+            <input
+              type="text"
+              id="update-location"
+              name="location"
+              required
+            /><br /><br />
+            <label for="update-price_plan">Price Plan:</label>
+            <input
+              type="text"
+              id="update-price_plan"
+              name="price_plan"
+              required
+            /><br /><br />
+            <label for="update-images">Images (comma-separated URLs):</label>
+            <input
+              type="text"
+              id="update-images"
+              name="images"
+              required
+            /><br /><br />
+            <label for="update-availability_status">Availability Status:</label>
+            <select
+              id="update-availability_status"
+              name="availability_status"
+              required
+            >
+              <option value="available">Available</option>
+              <option value="not_available">Not Available</option>
+            </select>
+            <br /><br />
+
+            <label for="update-maintenance_status">Maintenance Status:</label>
+            <select
+              id="update-maintenance_status"
+              name="maintenance_status"
+              required
+            >
+              <option value="under_maintenance">Under Maintenance</option>
+              <option value="operational">Operational</option>
+            </select>
+            <br /><br />
+            <label for="update-workspace_category">Workspace Category</label>
+            <select
+              id="update-workspace_category"
+              name="workspace_category"
+              required
+            >
+              <option value="Open Workspace">Open Workspace</option>
+              <option value="Private Offices">Private Offices</option>
+              <option value="Conference Rooms">Conference Rooms</option>
+              <option value="Event Room">Event Room</option>
+              <option value="Studio Room">Studio Room</option></select
+            ><br /><br />
+            <input type="submit" value="Update Workspace" />
+          </form>
+        </div>
+      </div>
+    </div>
+    <script>
+      // Function to open the update modal and populate with workspace details
+      function openUpdateModal(workspaceId) {
+        // AJAX request to fetch workspace details
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/workspace_details/" + workspaceId, true); // Adjust URL as per your Flask route
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+              var workspaceDetails = JSON.parse(xhr.responseText);
+
+              // Set values in the modal form fields
+              document.getElementById("update-id").value = workspaceId;
+              document.getElementById("update-name").value =
+                workspaceDetails.name;
+              document.getElementById("update-description").value =
+                workspaceDetails.description;
+              document.getElementById("update-location").value =
+                workspaceDetails.location;
+              document.getElementById("update-price_plan").value =
+                workspaceDetails.price_plan;
+              document.getElementById("update-images").value =
+                workspaceDetails.images.join(", "); // Assuming images is an array
+
+              // Set the availability status
+              var availabilitySelect = document.getElementById(
+                "update-availability_status"
+              );
+              var maintenanceSelect = document.getElementById(
+                "update-maintenance_status"
+              );
+              var categorySelect = document.getElementById(
+                "update-workspace_category"
+              );
+
+              availabilitySelect.value = workspaceDetails.availability_status;
+              maintenanceSelect.value = workspaceDetails.maintenance_status;
+              categorySelect.value = workspaceDetails.workspace_category;
+
+              var modal = document.getElementById("updateModal");
+              var modalContent = document.querySelector(".modal-content");
+              modal.style.display = "block";
+
+              // Calculate top position for vertical centering
+              var topPosition = Math.max(
+                0,
+                (window.innerHeight - modalContent.offsetHeight) / 2
+              );
+              modalContent.style.top = topPosition + "px";
+            } else {
+              console.error("Error fetching workspace details");
+            }
+          }
+        };
+        xhr.send();
+      }
+
+      // Function to close the update modal
+      function closeUpdateModal() {
+        var modal = document.getElementById("updateModal");
+        modal.style.display = "none";
+      }
+
+      // Event listener for the close button
+      document
+        .querySelector(".close")
+        .addEventListener("click", closeUpdateModal);
+
+      // Close modal if user clicks outside of it
+      window.onclick = function (event) {
+        var modal = document.getElementById("updateModal");
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+    </script>
+  </body>
+</html>

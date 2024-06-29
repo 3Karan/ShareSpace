@@ -1,0 +1,59 @@
+<!-- home.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    {%include 'sidebar.html'%}
+<div class="main-content">
+    <div class="header">
+        <h1>Overview</h1>
+        <div>
+            <!-- Placeholder for user icon and notifications -->
+        </div>
+    </div>
+    <div class="overview-cards">
+        <div class="card">
+            <h3>Total Allocated</h3>
+            <p>{{ava}}</p>
+        </div>
+        <div class="card">
+            <h3>Available Work space</h3>
+            <p>{{count}}</p>
+        </div>
+        <div class="card">
+            <h3>Under Maintenance</h3>
+            <p>{{unav}}</p>
+        </div>
+        <!-- <div class="card">
+            <h3>Available Rooms</h3>
+            <p>{{count}}</p>
+        </div> -->
+    </div>
+    <div class="room-types">
+        <h2>Availability</h2>
+        <div class="room-grid">
+            {% for category, count in categories.items() %}
+                <div class="room available">
+                    {{ category }}
+                    <div class="count">{{ count }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <iframe src="https://calendar.google.com/calendar/embed?src=83e0c5b36212ce8fc249fc0c27855268548e229b8ad655bb4ac115c40a1a6a94%40group.calendar.google.com&ctz=UTC" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+    </div>
+</div>
+
+</body>
+</html>
+

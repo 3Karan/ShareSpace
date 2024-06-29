@@ -1,0 +1,26 @@
+<body style="display: flex;">
+    {% include 'sidebar.html' %}
+    <div class="main-content">
+        <div class="header">
+            <h1>Add/Manage Workspaces</h1>
+            <div>
+                <!-- Placeholder for user icon and notifications -->
+            </div>
+        </div>
+        <div class="overview-cards">
+            <div class="card">
+                <h3>Add new workspaces</h3>
+                <a href="{{url_for('addworkspace')}}">Add</a>
+            
+            </div>
+            <div class="card">
+                <h3>Update/Manage workspaces</h3>
+                <a href="{{url_for('update')}}">Update/Manage</a>
+            </div>
+        </div>
+        <img style="margin-left: 100px; margin-top: 50px;"src="../static/images/image.jpeg" width="260px">
+    </div>
+
+
+</body>
+    
