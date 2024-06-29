@@ -15,9 +15,11 @@ Admin Dashboard: Manage users, workspaces, and bookings.
 **Technologies Used**
 
 Backend: Flask
+
 Database: MongoDB (using MongoDB Atlas)
 
 Frontend: HTML, CSS, Bootstrap
+
 Other Libraries: Flask-Session, Flask-WTF, pymongo, dnspython
 
 
@@ -52,13 +54,16 @@ Update the MongoDB connection string in the application configuration file (conf
 
 
 **Usage**
-User:
+
+**User:**
+
 Sign up and log in to access the user dashboard.
 View available workspaces and make bookings.
 Proceed to checkout and make payments.
 View booking and payment history.
 
-Admin:
+**Admin:**
+
 Log in to access the admin dashboard.
 Manage users, workspaces, and bookings.
 Approve or reject user bookings and handle payment verification.
