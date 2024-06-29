@@ -1,7 +1,10 @@
 **ShareSpace**
+
 ShareSpace is a Flask-based web application designed to manage shared workspaces. It allows users to book workspaces, manage bookings, and handle payments. Admins can manage workspaces and user bookings. The application integrates with MongoDB for data storage and provides features like user authentication, user and admin dashboards, booking functionalities, and payment processing.
 
+
 **Features**
+
 User Authentication: Sign up, login, and manage profiles.
 Workspace Management: View available workspaces with details like name, description, location, price plan, availability status, maintenance status, and category.
 Booking System: Users can book workspaces, and admins can manage these bookings.
@@ -10,6 +13,7 @@ Admin Dashboard: Manage users, workspaces, and bookings.
 
 
 **Technologies Used**
+
 Backend: Flask
 Database: MongoDB (using MongoDB Atlas)
 Frontend: HTML, CSS, Bootstrap
