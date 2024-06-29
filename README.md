@@ -47,28 +47,6 @@ Log in to access the admin dashboard.
 Manage users, workspaces, and bookings.
 Approve or reject user bookings and handle payment verification.
 
-**Project Structure**
-
-ShareSpace/
-├── app/
-│   ├── __init__.py
-│   ├── routes.py
-│   ├── models.py
-│   ├── forms.py
-│   └── templates/
-│       ├── base.html
-│       ├── index.html
-│       ├── login.html
-│       ├── signup.html
-│       ├── user_dashboard.html
-│       ├── admin_dashboard.html
-│       ├── cart.html
-│       ├── checkout.html
-│       └── ...
-├── config.py
-├── requirements.txt
-└── run.py
-
 
 Contributing
 Contributions are welcome! Please fork the repository and create a pull request with your changes. Ensure that your code follows the project’s coding guidelines and includes appropriate tests.
