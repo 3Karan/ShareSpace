@@ -28,11 +28,13 @@ Other Libraries: Flask-Session, Flask-WTF, pymongo, dnspython
 **Clone the repository:**
 
 git clone https://github.com/3Karan/Odoo.git
-cd ShareSpace
+
+cd Odoo
 
 **Create a virtual environment:**
 
 python3 -m venv venv
+
 source venv/bin/activate   # On Windows, use `venv\Scripts\activate`
 
 **Install dependencies:**
@@ -42,6 +44,7 @@ pip install -r requirements.txt
 **Set up MongoDB:**
 
 Create a MongoDB cluster on MongoDB Atlas.
+
 Replace the connection string in the Flask application configuration with your MongoDB Atlas connection string.
 
 **Run the application:**
