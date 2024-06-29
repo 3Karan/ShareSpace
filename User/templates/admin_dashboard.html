@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            display: flex;
+            background-color: #f0f2f5;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #2962ff;
+            color: white;
+            padding: 20px;
+            height: 100vh;
+        }
+        .sidebar h2 {
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        .sidebar ul {
+            list-style-type: none;
+        }
+        .sidebar li {
+            padding: 10px 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        .sidebar li:before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            margin-right: 10px;
+            border-radius: 5px;
+        }
+        .main-content {
+            flex: 1;
+            padding: 20px 30px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            font-weight: 600;
+            color: #333;
+        }
+        .overview-cards {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            width: 23%;
+        }
+        .card h3 {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 10px;
+            font-weight: normal;
+        }
+        .card p {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 0;
+        }
+        .room-types {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .room-types h2 {
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #333;
+        }
+        .room-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .room {
+            padding: 15px 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 14px;
+            cursor: pointer;
+            position: relative;
+        }
+        .room .count {
+            background-color: #00e226;
+            color: white;
+            border-radius: 5px;
+            padding: 2px 5px;
+            font-size: 12px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .room.available {
+            background-color: #c1ffb44f;
+            color: #000000;
+        }
+        .room.occupied {
+            background-color: #ffebee;
+            color: #f44336;
+        }
+        .right-panel {
+            position: absolute;
+            right: 30px;
+            top: 80px;
+            width: 300px;
+        }
+        .customer-satisfaction {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        .customer-satisfaction h2 {
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #333;
+        }
+        .rating {
+            font-size: 48px;
+            font-weight: bold;
+            color: #2962ff;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .review-button {
+            background-color: #2962ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        .staff-schedule {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .staff-schedule h2 {
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #333;
+        }
+        .staff-list {
+            display: flex;
+            align-items: center;
+        }
+        .staff-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            background-color: #e0e0e0;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Shared Space</h2>
+        <nav>
+            <ul>
+                <li>Home</li>
+                <li>Add Manage Rooms</li>
+                <li>Amenities</li>
+                <li>Invoicing</li>
+                <li>Support</li>
+                <li>Offers</li>
+            </ul>
+        </nav>
+    </div>
+    <div class="main-content">
+        <div class="header">
+            <h1>Overview</h1>
+            <div>
+                <!-- Placeholder for user icon and notifications -->
+            </div>
+        </div>
+        <div class="overview-cards">
+            <div class="card">
+                <h3>Total Allocated</h3>
+                <p>360</p>
+            </div>
+            <div class="card">
+                <h3>Available Work space</h3>
+                <p>380</p>
+            </div>
+            <div class="card">
+                <h3>Under Maintenance</h3>
+                <p>436</p>
+            </div>
+            <div class="card">
+                <h3>Available Rooms</h3>
+                <p>64</p>
+            </div>
+        </div>
+        <div class="room-types">
+            <h2>Availability</h2>
+            <div class="room-grid">
+                <div class="room available">
+                    Single Room
+                    <div class="count">45</div>
+                </div>
+                <div class="room available">
+                    Twin Room
+                    <div class="count">32</div>
+                </div>
+                <div class="room available">
+                    Studio Room
+                    <div class="count">20</div>
+                </div>
+                <div class="room available">
+                    Deluxe Room
+                    <div class="count">15</div>
+                </div>
+                <div class="room available">
+                    Suite
+                    <div class="count">8</div>
+                </div>
+                <div class="room available">
+                    President Suite
+                    <div class="count">3</div>
+                </div>
+                <div class="room available">
+                    Connecting Room
+                    <div class="count">10</div>
+                </div>
+                <div class="room available">
+                  Connecting Room
+                  <div class="count">10</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

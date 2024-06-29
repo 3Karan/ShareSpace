@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Manage Bookings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css">
+    <link rel="stylesheet" href="..\static\css\style.css">
+</head>
+<body>
+    <div class="dashboard">
+        <aside class="sidebar">
+            <h2>ShareSpace Admin</h2>
+            <nav>
+                <ul>
+                    <li><a href="#dashboard">Dashboard</a></li>
+                    <li><a href="#manage-bookings">Manage Bookings</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header>
+                <h1>Admin Dashboard</h1>
+            </header>
+            <section id="manage-bookings" class="section-bookings">
+                <h2>Manage Bookings</h2>
+                <div id="calendar"></div>
+                <div class="form-container">
+                    <h3>Add Booking</h3>
+                    <form id="add-booking-form">
+                        <label for="user_id">User ID:</label>
+                        <input type="text" id="user_id" name="user_id" required>
+                        <label for="workspace_id">Workspace ID:</label>
+                        <input type="text" id="workspace_id" name="workspace_id" required>
+                        <label for="start_time">Start Time:</label>
+                        <input type="datetime-local" id="start_time" name="start_time" required>
+                        <label for="end_time">End Time:</label>
+                        <input type="datetime-local" id="end_time" name="end_time" required>
+                        <button type="submit">Add Booking</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            function fetchBookings() {
+                $.ajax({
+                    url: '/api/bookings',
+                    method: 'GET',
+                    success: function(data) {
+                        $('#calendar').fullCalendar('removeEvents');
+                        $('#calendar').fullCalendar('addEventSource', data);
+                    }
+                });
+            }
+
+            $('#calendar').fullCalendar({
+                events: fetchBookings,
+                eventRender: function(event, element) {
+                    element.append('<button class="delete-booking" data-id="' + event._id + '">Delete</button>');
+                },
+                eventAfterRender: function(event, element, view) {
+                    element.find('.delete-booking').on('click', function() {
+                        var bookingId = $(this).data('id');
+                        $.ajax({
+                            url: '/api/bookings/' + bookingId,
+                            method: 'DELETE',
+                            success: function(response) {
+                                alert(response.msg);
+                                fetchBookings();
+                            }
+                        });
+                    });
+                }
+            });
+
+            $('#add-booking-form').on('submit', function(e) {
+                e.preventDefault();
+                var formData = $(this).serializeArray();
+                var data = {};
+                $(formData).each(function(index, obj){
+                    data[obj.name] = obj.value;
+                });
+
+                $.ajax({
+                    url: '/api/bookings',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(data),
+                    success: function(response) {
+                        alert(response.msg);
+                        fetchBookings();
+                        $('#add-booking-form')[0].reset();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

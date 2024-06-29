@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Booking Status{% endblock %}
+
+{% block content %}
+<div class="booking-status-container">
+    <h2>Booking Status</h2>
+    <div class="booking-details">
+        {% if booking_status %}
+        <p><strong>Booking ID:</strong> {{ booking_status.booking_id }}</p>
+        <p><strong>Status:</strong> {{ booking_status.status }}</p>
+        <p><strong>Start Time:</strong> {{ booking_status.start_time }}</p>
+        <p><strong>End Time:</strong> {{ booking_status.end_time }}</p>
+        <!-- Add more details as needed -->
+        {% else %}
+        <p>No booking found with the provided Booking ID.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

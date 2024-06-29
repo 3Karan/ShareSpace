@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .categories {
+            margin-bottom: 20px;
+        }
+
+        .category-btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin-right: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .category-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .workspace-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+
+        .workspace-card {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+            width: calc(33.33% - 20px); /* Adjust based on desired grid layout */
+            margin-right: 20px;
+        }
+
+        .workspace-card:nth-child(3n+3) {
+            margin-right: 0; /* Clears margin for every third item to prevent alignment issues */
+        }
+
+        .workspace-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .workspace-details {
+            padding: 20px;
+        }
+
+        .workspace-details h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .category {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .workspace-details p {
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .add-to-cart-btn {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    {% extends 'base.html' %}
+
+    {% block title %}User Dashboard{% endblock %}
+
+    {% block content %}
+    <div class="dashboard-container">
+        <section class="categories">
+            <button class="category-btn" onclick="filterWorkspaces('Open Workspace')">Open Workspace</button>
+            <button class="category-btn" onclick="filterWorkspaces('Private Offices')">Private Offices</button>
+            <button class="category-btn" onclick="filterWorkspaces('Conference Rooms')">Conference Rooms</button>
+            <button class="category-btn" onclick="filterWorkspaces('Event Room')">Event Room</button>
+            <button class="category-btn" onclick="filterWorkspaces('Studio Room')">Studio Room</button>
+        </section>
+        <h2>Available Workspaces</h2>
+        <section class="workspace-list">
+            
+            {% if workspaces %}
+                {% for workspace in workspaces %}
+                {% if workspace.availability_status == 'available' %}
+                    <div class="workspace-card">
+                        <img src="{{ workspace.images[0] }}" alt="{{ workspace.name }}">
+                        <div class="workspace-details">
+                            <h2><b>{{ workspace.name }}</b></h2>
+                            <p class="category"><b>{{ workspace.workspace_category }}</b></p>
+                            <!-- <p>{{ workspace.description }}</p> -->
+                            <p>📍 {{ workspace.location }}</p>
+                            <p><b>Rs.</b>{{ workspace.price_plan }}</p>
+                            <a href="{{ url_for('add_to_cart', workspace_id=workspace.workspace_id) }}" class="add-to-cart-btn">Add to Cart</a>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <p>No workspaces available at the moment.</p>
+            {% endif %}
+        </section>
+    </div>
+
+    <script>
+        function filterWorkspaces(category) {
+            // Get all workspace cards
+            let workspaces = document.querySelectorAll('.workspace-card');
+
+            // Show only the workspaces that match the selected category
+            workspaces.forEach(workspace => {
+                let workspaceCategory = workspace.querySelector('.category').textContent.split(': ')[1];
+                if (workspaceCategory === category) {
+                    workspace.style.display = 'block'; // Show matching workspace
+                } else {
+                    workspace.style.display = 'none'; // Hide non-matching workspace
+                }
+            });
+        }
+    </script>
+
+    {% endblock %}
+</body>
+</html>

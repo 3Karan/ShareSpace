@@ -1,0 +1,146 @@
+/* Reset styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+  }
+  
+  .container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+  }
+  
+  header {
+    background: #333;
+    color: #fff;
+    padding-top: 30px;
+    min-height: 70px;
+    border-bottom: #e8491d 3px solid;
+  }
+  
+  header a {
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 16px;
+  }
+  
+  header ul {
+    margin: 0;
+    padding: 0;
+  }
+  
+  header li {
+    list-style: none;
+    display: inline;
+    padding: 0 20px 0 20px;
+  }
+  
+  header nav ul li a:hover {
+    color: #000000;
+    transition: all 0.3s ease 0s;
+  }
+  
+  .hero {
+    background: url('../images/bg.jpg') no-repeat center center/cover;
+    height: 900px;
+  }
+  
+  .hero-content {
+    text-align: center;
+    padding-top: 200px;
+    color: #fff;
+  }
+  
+  .hero h2 {
+    font-size: 3em;
+  }
+  
+  .hero p {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+  }
+  
+  .btn {
+    display: inline-block;
+    background: #e8491d;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    margin-top: 20px;
+    border-radius: 5px;
+  }
+  
+  .btn:hover {
+    background: #333;
+    transition: all 0.3s ease 0s;
+  }
+  
+  .features {
+    padding: 50px 0;
+  }
+  
+  .features h2 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .feature-item {
+    margin-bottom: 20px;
+  }
+  
+  .feature-item h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  
+  .pricing {
+    background: #f4f4f4;
+    padding: 50px 0;
+  }
+  
+  .pricing h2 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .pricing-plans {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .plan {
+    
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 30%;
+    font-weight: 900;
+  }
+  
+  .plan h3 {
+    font-size: 2em;
+    margin-bottom: 10px;
+  }
+  
+  .plan p {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+  }
+  
+  .plan ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .plan ul li {
+    margin-bottom: 10px;
+  }

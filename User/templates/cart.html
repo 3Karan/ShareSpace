@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .cart-container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-container h2 {
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .cart-items {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .cart-item {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+            margin-bottom: 10px;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .cart-item h3 {
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .cart-item p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .total-price {
+            text-align: right;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .checkout-form {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .checkout-form button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .checkout-form button:hover {
+            background-color: #0056b3;
+        }
+
+        .empty-cart-img {
+            text-align: center;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    {% extends 'base.html' %}
+    
+    {% block title %}Check Out{% endblock %}
+
+    {% block content %}
+    <div class="cart-container">
+        <h2>Check Out</h2>
+        
+        {% if cart_items %}
+        <ul class="cart-items">
+            {% for item in cart_items %}
+            <li class="cart-item">
+                <h3>{{ item['name'] }}</h3>
+                <p>Price Plan: {{ item['price_plan'] }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+        <p class="total-price">Total Price: Rs.{{ total_price }}</p>
+        <form class="checkout-form" action="{{ url_for('checkout') }}" method="GET">
+            <input type="hidden" name="total_price" value="{{ total_price }}">
+            <button type="submit">Proceed to Checkout</button>
+        </form>
+        {% else %}
+        <div class="empty-cart-img">
+            <img src="static\images\WhatsApp Image 2024-06-29 at 19.01.21_ebda77b2.jpg" alt="Empty Cart" width="400px">
+            
+        </div>
+        {% endif %}
+    </div>
+    {% endblock %}
+</body>
+</html>

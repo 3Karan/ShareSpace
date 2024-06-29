@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<section>
+  <div class="row" style="margin-top:20px;">
+    <div class="col-md-7 col-lg-7 col-xl-6 mb-4 mb-md-0">
+      <h5 class="mb-0 text-success">Rs. {{ total_price }}</h5>
+      <h5 class="mb-3">Order Details</h5>
+
+      <!-- Displaying cart items -->
+      {% for item in cart_items %}
+      <div>
+        <h6>{{ item['name'] }}</h6>
+        <p>Price: ${{ item['price_plan'] }}</p>
+        <p>Quantity: {{ item['quantity'] }}</p>
+      </div>
+      {% endfor %}
+
+      <!-- Additional Resources -->
+      <hr>
+      <h5 class="mb-3">Additional Resources</h5>
+      <form id="additionalResourcesForm">
+        <div class="form-check">
+          <input class="form-check-input resource-checkbox" type="checkbox" id="desk" name="desk" value="desk" data-price="50">
+          <label class="form-check-label" for="desk">
+            Desk (+Rs.50)
+          </label>
+          <input type="number" class="form-control form-control-sm resource-quantity" id="quantityDesk" name="quantityDesk" value="0" min="0">
+        </div>
+        <div class="form-check">
+          <input class="form-check-input resource-checkbox" type="checkbox" id="chair" name="chair" value="chair" data-price="20">
+          <label class="form-check-label" for="chair">
+            Chair (+Rs.20)
+          </label>
+          <input type="number" class="form-control form-control-sm resource-quantity" id="quantityChair" name="quantityChair" value="0" min="0">
+        </div>
+        <div class="form-check">
+          <input class="form-check-input resource-checkbox" type="checkbox" id="printer" name="printer" value="printer" data-price="30">
+          <label class="form-check-label" for="printer">
+            Printer (+Rs.30)
+          </label>
+          <input type="number" class="form-control form-control-sm resource-quantity" id="quantityPrinter" name="quantityPrinter" value="0" min="0">
+        </div>
+        <div class="form-check">
+          <input class="form-check-input resource-checkbox" type="checkbox" id="keyboard" name="keyboard" value="keyboard" data-price="10">
+          <label class="form-check-label" for="keyboard">
+            Keyboard (+Rs.10)
+          </label>
+          <input type="number" class="form-control form-control-sm resource-quantity" id="quantityKeyboard" name="quantityKeyboard" value="0" min="0">
+        </div>
+        <div class="form-check">
+          <input class="form-check-input resource-checkbox" type="checkbox" id="mouse" name="mouse" value="mouse" data-price="5">
+          <label class="form-check-label" for="mouse">
+            Mouse (+Rs.5)
+          </label>
+          <input type="number" class="form-control form-control-sm resource-quantity" id="quantityMouse" name="quantityMouse" value="0" min="0">
+        </div>
+        <div class="form-check">
+          <input class="form-check-input resource-checkbox" type="checkbox" id="projector" name="projector" value="projector" data-price="100">
+          <label class="form-check-label" for="projector">
+            Projector (+Rs.100)
+          </label>
+          <input type="number" class="form-control form-control-sm resource-quantity" id="quantityProjector" name="quantityProjector" value="0" min="0">
+        </div>
+      </form>
+
+      <!-- Payment options -->
+      
+
+      <!-- Proceed to payment button -->
+      
+    </div>
+
+    <!-- Order recap section -->
+    <div class="col-md-5 col-lg-4 col-xl-4 offset-lg-1 offset-xl-2">
+      <div class="p-3 bg-body-tertiary">
+        <span class="fw-bold">Order Recap</span>
+        <!-- Replace with actual order recap details as needed -->
+        <div class="d-flex justify-content-between mt-2">
+          <span>Contracted Price</span>
+          <span id="contractedPrice">Rs.{{ total_price }}</span>
+        </div>
+        <!-- Additional resources recap -->
+        <hr>
+        <div id="additionalResourcesRecap" class="mt-2"></div>
+        <!-- Total price recap -->
+        <hr>
+        <div class="d-flex justify-content-between mt-2">
+          <span>Total</span>
+          <span class="text-success" id="totalPrice">Rs.{{ total_price }}</span>
+        </div>
+      </div>
+      <hr>
+      <h5 class="mb-3">Payment Options</h5>
+      {% for option in payment_options %}
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="payment_option" id="option{{ option.id }}" value="{{ option.id }}">
+        <label class="form-check-label" for="option{{ option.id }}">
+          <div class="d-flex justify-content-between align-items-center">
+            <span>{{ option.name }}</span>
+            <span>{{ option.details }}</span>
+          </div>
+        </label>
+      </div>
+      {% endfor %}
+      <form id="paymentForm" action="{{ url_for('process_payment') }}" method="POST">
+        <button type="submit" class="btn btn-success btn-lg btn-block mt-4">Proceed to Payment</button>
+      </form>
+      
+    </div>
+  </div>
+</section>
+
+<!-- JavaScript for Payment Popup -->
+<script>
+  // Wait for the document to be fully loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    // Handle quantity changes for additional resources
+    const resourceCheckboxes = document.querySelectorAll('.resource-checkbox');
+    resourceCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', updateAdditionalResourcesRecap);
+    });
+
+    // Intercept the form submit event
+    document.getElementById('paymentForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the form from submitting normally
+
+      // Simulate payment processing
+      simulatePayment();
+    });
+
+    // Function to update the order recap based on selected additional resources
+    function updateAdditionalResourcesRecap() {
+      let additionalCost = 0;
+      resourceCheckboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+          const resource = checkbox.value;
+          const quantity = parseInt(document.getElementById(`quantity${resource.charAt(0).toUpperCase() + resource.slice(1)}`).value);
+          additionalCost += parseFloat(checkbox.dataset.price) * quantity;
+        }
+      });
+
+      // Update the additional resources recap section
+      const recapElement = document.getElementById('additionalResourcesRecap');
+      recapElement.innerHTML = `<span>Additional Resources: +$${additionalCost.toFixed(2)}</span>`;
+
+      // Update the total price
+      const totalPriceElement = document.getElementById('totalPrice');
+      const contractedPrice = parseFloat(document.getElementById('contractedPrice').textContent.replace('$', ''));
+      const totalWithAdditional = contractedPrice + additionalCost;
+      totalPriceElement.textContent = `$${totalWithAdditional.toFixed(2)}`;
+    }
+ // Function to simulate updating availability status
+    function updateAvailabilityStatus(resource) {
+      // Simulate updating availability status in backend (Flask + MongoDB)
+      // Replace with actual AJAX request to update availability status
+      fetch(`/update_availability/${resource}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ available: false }) // Update availability status to false
+      })
+      .then(response => {
+        if (response.ok) {
+          console.log(`${resource} availability updated successfully.`);
+        } else {
+          console.error(`Failed to update ${resource} availability.`);
+        }
+      })
+      .catch(error => console.error('Error updating availability:', error));
+    }
+    // Function to simulate payment
+    function simulatePayment() {
+      // Perform AJAX request or show a simple popup
+      // Here, we use setTimeout to simulate payment processing
+      setTimeout(function() {
+        alert('Payment is done'); // Show the payment success message
+
+        // Redirect to empty cart after payment
+        window.location.href = "{{ url_for('empty_cart') }}"; // Replace with your actual route for emptying the cart
+      }, 2000); // Simulate a delay of 2 seconds for payment processing
+    }
+  });
+</script>
+{% endblock %}
