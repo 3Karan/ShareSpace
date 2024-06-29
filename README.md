@@ -27,7 +27,7 @@ Other Libraries: Flask-Session, Flask-WTF, pymongo, dnspython
 
 **Clone the repository:**
 
-git clone https://github.com/yourusername/ShareSpace.git
+git clone https://github.com/3Karan/Odoo.git
 cd ShareSpace
 
 **Create a virtual environment:**
